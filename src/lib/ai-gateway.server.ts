@@ -48,7 +48,7 @@ export function createLovableAiGatewayProvider(
   const provider = createOpenAICompatible({
     name: "lovable",
     baseURL: "https://ai.gateway.lovable.dev/v1",
-    supportsStructuredOutputs: options?.structuredOutputs ?? false,
+    supportsStructuredOutputs: options?.structuredOutputs ?? true,
     headers: {
       "Lovable-API-Key": lovableApiKey,
       "X-Lovable-AIG-SDK": "vercel-ai-sdk",
