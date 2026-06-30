@@ -39,7 +39,7 @@ export const analyzeDocument = createServerFn({ method: "POST" })
     let prompt: Parameters<typeof generateObject>[0]["messages"];
 
     if (mime === "application/pdf") {
-      const b64 = btoa(String.fromCharCode(...bytes));
+      const b64 = Buffer.from(bytes).toString("base64");
       prompt = [{
         role: "user",
         content: [
