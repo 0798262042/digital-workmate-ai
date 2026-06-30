@@ -36,7 +36,7 @@ Keep the body professional, well-structured with greeting and sign-off, and no l
       prompt,
       schema: z.object({
           subject: z.string(),
-          body: z.string(),,
+          body: z.string(),
       }),
     });
 
