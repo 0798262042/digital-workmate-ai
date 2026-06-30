@@ -1,4 +1,4 @@
-# 🤖 SmartDesk AI
+# 🤖 SmartDesk 
 
 SmartDesk AI is an AI-powered workplace productivity platform designed to function as a digital co-worker. It combines intelligent tools into a single dashboard 
 to help users manage emails, meetings, tasks, research, documents, and daily planning. Inspired by modern workplace technologies from contries like China,  and South Korea, 
