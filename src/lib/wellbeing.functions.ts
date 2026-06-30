@@ -11,8 +11,8 @@ const TranslateInput = z.object({
 });
 
 const Schema = z.object({
-  translated: z.string(),
-  notes: z.string(),
+  translated: z.string().describe("The translated text"),
+  notes: z.string().describe("Brief cultural or register note. Use empty string if none."),
 });
 
 export const translateText = createServerFn({ method: "POST" })
