@@ -36,7 +36,7 @@ export const analyzeDocument = createServerFn({ method: "POST" })
     const gateway = createLovableAiGatewayProvider(key);
 
     const mime = doc.mime ?? "application/octet-stream";
-    let prompt: Parameters<typeof generateText>[0]["messages"];
+    let prompt: Parameters<typeof generateObject>[0]["messages"];
 
     if (mime === "application/pdf") {
       const b64 = btoa(String.fromCharCode(...bytes));
