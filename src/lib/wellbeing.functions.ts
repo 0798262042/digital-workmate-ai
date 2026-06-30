@@ -21,11 +21,11 @@ export const translateText = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const key = requireGatewayKey();
     const gateway = createLovableAiGatewayProvider(key);
-    const { output } = await generateText({
+    const { object: output } = await generateObject({
       model: gateway(DEFAULT_CHAT_MODEL),
       system: `You are a professional workplace translator. Translate accurately while preserving meaning, register, and cultural nuance.`,
       prompt: `Translate the following text into ${data.targetLanguage}${data.tone ? ` in a ${data.tone} tone` : ""}. Add a brief cultural / register note in 'notes'.\n\nText:\n${data.text}`,
-      output: Output.object({ schema: Schema }),
+      schema: Schema,
     });
     return output;
   });
@@ -45,11 +45,11 @@ export const checkMood = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const key = requireGatewayKey();
     const gateway = createLovableAiGatewayProvider(key);
-    const { output } = await generateText({
+    const { object: output } = await generateObject({
       model: gateway(DEFAULT_CHAT_MODEL),
       system: "You are SmartDesk AI's wellbeing co-worker. Be warm, supportive, and practical. Not a medical professional.",
       prompt: `The user wrote about how they're feeling at work:\n"${data.text}"\n\nReturn stress level 1-5, a one-word mood, advice, a break suggestion, and time tips.`,
-      output: Output.object({ schema: MoodSchema }),
+      schema: MoodSchema,
     });
     await context.supabase.from("productivity_events").insert({
       user_id: context.userId,
@@ -81,14 +81,14 @@ export const dailyBrief = createServerFn({ method: "POST" })
 
     const key = requireGatewayKey();
     const gateway = createLovableAiGatewayProvider(key);
-    const { output } = await generateText({
+    const { object: output } = await generateObject({
       model: gateway(DEFAULT_CHAT_MODEL),
       system: "You are SmartDesk AI delivering a short, energising daily brief.",
       prompt: `User name: ${profile?.full_name ?? "there"}
 Date: ${today.toDateString()}
 Tasks today: ${(tasks ?? []).map((t) => `- [${t.priority}] ${t.title}`).join("\n") || "None"}
 Meetings: ${(meetings ?? []).map((m) => `- ${m.title} at ${m.scheduled_at}`).join("\n") || "None"}`,
-      output: Output.object({ schema: BriefSchema }),
+      schema: BriefSchema,
     });
     return output;
   });

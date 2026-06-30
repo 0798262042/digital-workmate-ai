@@ -34,11 +34,11 @@ export const buildPlan = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const key = requireGatewayKey();
     const gateway = createLovableAiGatewayProvider(key);
-    const { output } = await generateText({
+    const { object: output } = await generateObject({
       model: gateway(DEFAULT_CHAT_MODEL),
       system: "You are SmartDesk AI building a focused daily plan. Balance priority, deep work, and breaks.",
       prompt: `Working hours: ${data.workingHours}\nTasks:\n${data.tasks.map((t, i) => `${i+1}. [${t.priority}] ${t.title}${t.estimatedMinutes ? ` (~${t.estimatedMinutes}m)` : ""}${t.dueAt ? ` due ${t.dueAt}` : ""}`).join("\n")}`,
-      output: Output.object({ schema: PlannerSchema }),
+      schema: PlannerSchema,
     });
     return output;
   });

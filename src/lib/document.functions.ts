@@ -53,11 +53,11 @@ export const analyzeDocument = createServerFn({ method: "POST" })
       prompt = [{ role: "user", content: `Analyse this document:\n\n${text}` }];
     }
 
-    const { output } = await generateText({
+    const { object: output } = await generateObject({
       model: gateway(DEFAULT_CHAT_MODEL),
       system: "You are SmartDesk AI's Document Analyzer.",
       messages: prompt as any,
-      output: Output.object({ schema: DocSchema }),
+      schema: DocSchema,
     });
 
     await context.supabase.from("documents").update({ analysis_json: output }).eq("id", data.documentId);

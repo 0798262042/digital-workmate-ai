@@ -48,11 +48,11 @@ export const analyzeResearch = createServerFn({ method: "POST" })
 
     const key = requireGatewayKey();
     const gateway = createLovableAiGatewayProvider(key);
-    const { output } = await generateText({
+    const { object: output } = await generateObject({
       model: gateway(DEFAULT_CHAT_MODEL),
       system: "You are SmartDesk AI's Research Lab. Provide a sharp, actionable analysis.",
       prompt: `Title: ${data.title}\n\nContent:\n${text}`,
-      output: Output.object({ schema: ResearchSchema }),
+      schema: ResearchSchema,
     });
 
     await context.supabase.from("research_items").insert({

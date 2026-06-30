@@ -27,7 +27,7 @@ export const prepareMeeting = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const key = requireGatewayKey();
     const gateway = createLovableAiGatewayProvider(key);
-    const { output } = await generateText({
+    const { object: output } = await generateObject({
       model: gateway(DEFAULT_CHAT_MODEL),
       system: `You are SmartDesk AI helping prepare a workplace meeting.
 Return concise, actionable items. The agenda must sum approximately to ${data.durationMin ?? 30} minutes.`,
@@ -35,7 +35,7 @@ Return concise, actionable items. The agenda must sum approximately to ${data.du
 Attendees: ${data.attendees.join(", ") || "Not specified"}
 Goal: ${data.goal ?? "Not specified"}
 Duration: ${data.durationMin ?? 30} minutes`,
-      output: Output.object({ schema: PrepSchema }),
+      schema: PrepSchema,
     });
 
     if (data.save) {
@@ -71,11 +71,11 @@ export const summarizeMeeting = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const key = requireGatewayKey();
     const gateway = createLovableAiGatewayProvider(key);
-    const { output } = await generateText({
+    const { object: output } = await generateObject({
       model: gateway(DEFAULT_CHAT_MODEL),
       system: "You are SmartDesk AI summarizing meeting notes into a clear, actionable summary.",
       prompt: `Meeting: ${data.title}\n\nNotes:\n${data.notes}`,
-      output: Output.object({ schema: SummarySchema }),
+      schema: SummarySchema,
     });
 
     if (data.meetingId) {

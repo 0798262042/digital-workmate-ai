@@ -30,15 +30,13 @@ Keep the body professional, well-structured with greeting and sign-off, and no l
       ? `Recipient: ${data.recipient}\n\nContext / instructions:\n${data.context}`
       : data.context;
 
-    const { output } = await generateText({
+    const { object: output } = await generateObject({
       model: gateway(DEFAULT_CHAT_MODEL),
       system: sys,
       prompt,
-      output: Output.object({
-        schema: z.object({
+      schema: z.object({
           subject: z.string(),
-          body: z.string(),
-        }),
+          body: z.string(),,
       }),
     });
 
