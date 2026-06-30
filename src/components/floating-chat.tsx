@@ -24,7 +24,7 @@ export function FloatingChat() {
 
   const busy = status === "submitted" || status === "streaming";
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(_msg: unknown, e: React.FormEvent) {
     e.preventDefault();
     if (!input.trim() || busy) return;
     const text = input.trim();
